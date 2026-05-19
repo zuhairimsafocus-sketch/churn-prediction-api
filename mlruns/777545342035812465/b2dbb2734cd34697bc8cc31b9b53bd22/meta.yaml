@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/Mohd Zuhairi/Desktop/Data Science/Classification/src/../mlruns/777545342035812465/b2dbb2734cd34697bc8cc31b9b53bd22/artifacts
+end_time: 1779198079772
+entry_point_name: ''
+experiment_id: '777545342035812465'
+lifecycle_stage: active
+run_id: b2dbb2734cd34697bc8cc31b9b53bd22
+run_name: resilient-shrimp-71
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1779198075686
+status: 3
+tags: []
+user_id: Mohd Zuhairi

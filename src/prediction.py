@@ -1,7 +1,11 @@
 import joblib
 import pandas as pd
 
-model = joblib.load('../models/churn_model_v2.pkl')
+import mlflow
+
+model = mlflow.sklearn.load_model(
+    "models:/churn_model@staging"
+)
 
 # =====================================
 # SAMPLE INPUT

@@ -1,0 +1,8 @@
+artifact_location: file:///C:/Users/Mohd Zuhairi/Desktop/Data Science/Classification/src/../mlruns/777545342035812465
+creation_time: 1779196133740
+experiment_id: '777545342035812465'
+last_update_time: 1779196133740
+lifecycle_stage: active
+name: Customer Churn Prediction
+trace_location: null
+workspace: default

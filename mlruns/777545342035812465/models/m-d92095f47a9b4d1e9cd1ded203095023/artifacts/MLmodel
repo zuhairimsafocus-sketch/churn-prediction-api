@@ -1,0 +1,23 @@
+artifact_path: file:///C:/Users/Mohd Zuhairi/Desktop/Data Science/Classification/src/../mlruns/777545342035812465/models/m-d92095f47a9b4d1e9cd1ded203095023/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.12.0
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.8.0
+    skops_trusted_types: null
+mlflow_version: 3.12.0
+model_id: m-d92095f47a9b4d1e9cd1ded203095023
+model_size_bytes: 2539
+model_uuid: m-d92095f47a9b4d1e9cd1ded203095023
+prompts: null
+run_id: 28edb088e4034dec8de5f56efffd92be
+utc_time_created: '2026-05-19 13:08:55.414734'

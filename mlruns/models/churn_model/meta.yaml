@@ -1,0 +1,9 @@
+aliases:
+  staging: '1'
+creation_timestamp: 1779198079735
+deployment_job_id: null
+deployment_job_state: null
+description: null
+last_updated_timestamp: 1779198320530
+name: churn_model
+workspace: default

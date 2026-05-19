@@ -1,0 +1,10 @@
+artifact_location: file:///C:/Users/Mohd Zuhairi/Desktop/Data Science/Classification/src/../mlruns/777545342035812465/models/m-190135d88601410bba60f41f70b34882/artifacts
+creation_timestamp: 1779196339814
+experiment_id: '777545342035812465'
+last_updated_timestamp: 1779196343409
+model_id: m-190135d88601410bba60f41f70b34882
+model_type: null
+name: churn_model
+source_run_id: 45637edf445b4b4b8adfe688841fc21e
+status: 2
+status_message: null

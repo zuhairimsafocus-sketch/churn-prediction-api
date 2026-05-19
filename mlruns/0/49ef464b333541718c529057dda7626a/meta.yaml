@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/Mohd Zuhairi/Desktop/Data Science/Classification/src/../mlruns/0/49ef464b333541718c529057dda7626a/artifacts
+end_time: 1779195771572
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 49ef464b333541718c529057dda7626a
+run_name: trusting-loon-320
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1779195765842
+status: 3
+tags: []
+user_id: Mohd Zuhairi

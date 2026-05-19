@@ -1,0 +1,10 @@
+artifact_location: file:///C:/Users/Mohd Zuhairi/Desktop/Data Science/Classification/src/../mlruns/777545342035812465/models/m-b60e3ff142e84699a9778c2e0c6967eb/artifacts
+creation_timestamp: 1779198076225
+experiment_id: '777545342035812465'
+last_updated_timestamp: 1779198079714
+model_id: m-b60e3ff142e84699a9778c2e0c6967eb
+model_type: null
+name: model
+source_run_id: b2dbb2734cd34697bc8cc31b9b53bd22
+status: 2
+status_message: null

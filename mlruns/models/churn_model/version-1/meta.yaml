@@ -1,0 +1,16 @@
+creation_timestamp: 1779198079739
+current_stage: None
+deployment_job_state: null
+description: null
+last_updated_timestamp: 1779198079739
+model_id: m-b60e3ff142e84699a9778c2e0c6967eb
+name: churn_model
+run_id: b2dbb2734cd34697bc8cc31b9b53bd22
+run_link: null
+source: models:/m-b60e3ff142e84699a9778c2e0c6967eb
+status: READY
+status_message: null
+storage_location: file:///C:/Users/Mohd Zuhairi/Desktop/Data Science/Classification/src/../mlruns/777545342035812465/models/m-b60e3ff142e84699a9778c2e0c6967eb/artifacts
+user_id: null
+version: 1
+workspace: default
