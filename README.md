@@ -1,90 +1,70 @@
-﻿# Customer Churn Prediction API
+# Customer Churn Prediction API
 
-## Project Overview
-Machine Learning API for predicting customer churn using FastAPI and Docker.
+Machine Learning API for predicting customer churn using Logistic Regression and FastAPI.
 
 ## Tech Stack
+
 - Python
 - Scikit-learn
 - FastAPI
+- MLflow
 - Docker
 - GitHub
-- Pandas
-- Joblib
-
-## Workflow
-
-Data Collection
-↓
-EDA and Feature Engineering
-↓
-Model Training
-↓
-Model Serialization (.pkl)
-↓
-FastAPI Deployment
-↓
-Docker Containerisation
 
 ## Project Structure
 
-```text
-data/
-models/
-notebooks/
-src/
-Dockerfile
-requirements.txt
-README.md
+```
+customer-churn-api/
+│
+├── data/
+├── models/
+├── notebooks/
+├── src/
+│ ├── train.py
+│ ├── prediction.py
+│ └── main.py
+│
+├── Dockerfile
+├── requirements.txt
+└── README.md
 ```
 
-## Run Locally
+## Features
 
-Install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-Run API:
-
-```bash
-uvicorn src.main:app --reload --port 8001
-```
-
-Run Docker:
-
-```bash
-docker build -t churn-api .
-docker run -p 8001:8001 churn-api
-```
+- Customer churn prediction
+- REST API deployment using FastAPI
+- Experiment tracking using MLflow
+- Docker containerization
+- Model versioning
 
 ## API Endpoint
 
 POST:
 
-```text
-/predict
 ```
 
-Sample Input:
+/predict
+
+```
+
+Example:
 
 ```json
 {
-    "Payment Delay":25,
-    "Support Calls":8,
-    "Tenure":50,
-    "Gender":"Female",
-    "Subscription Type":"Basic",
-    "Contract Length":"Monthly"
+"Payment Delay":25,
+"Support Calls":8,
+"Tenure":50,
+"Gender":"Female",
+"Subscription Type":"Basic",
+"Contract Length":"Monthly"
 }
 ```
 
-Sample Output:
+Response:
 
 ```json
 {
-    "prediction":1,
-    "churn_probability":0.9578
+"prediction":1,
+"churn_probability":0.95
 }
 ```
