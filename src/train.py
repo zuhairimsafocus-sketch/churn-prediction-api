@@ -99,15 +99,24 @@ pipeline = Pipeline([
 # TRAIN
 # =========================
 
+# =========================
+# MLFLOW TRACKING
+# =========================
+
 with mlflow.start_run():
 
+    # Train model
     pipeline.fit(
         x_train,
         y_train
     )
 
-    y_pred = pipeline.predict(x_test)
+    # Prediction
+    y_pred = pipeline.predict(
+        x_test
+    )
 
+    # Metrics
     accuracy = accuracy_score(
         y_test,
         y_pred
@@ -128,7 +137,34 @@ with mlflow.start_run():
         y_pred
     )
 
-    # Metrics
+    # ======================
+    # LOG PARAMETERS
+    # ======================
+
+    mlflow.log_param(
+        "model",
+        "LogisticRegression"
+    )
+
+    mlflow.log_param(
+        "test_size",
+        0.2
+    )
+
+    mlflow.log_param(
+        "random_state",
+        42
+    )
+
+    mlflow.log_param(
+        "model_version",
+        "v1"
+    )
+
+    # ======================
+    # LOG METRICS
+    # ======================
+
     mlflow.log_metric(
         "accuracy",
         accuracy
@@ -149,56 +185,34 @@ with mlflow.start_run():
         f1
     )
 
-    # Parameters
-    mlflow.log_param(
-        "model",
-        "LogisticRegression"
-    )
+    # ======================
+    # CONFUSION MATRIX
+    # ======================
 
-    mlflow.log_param(
-        "test_size",
-        0.2
-    )
-
-    mlflow.log_param(
-        "random_state",
-        42
-    )
-
-    # Confusion matrix
     ConfusionMatrixDisplay.from_predictions(
         y_test,
         y_pred
     )
 
     plt.savefig(
-        CONFUSION_PATH
+        "confusion_matrix.png"
     )
 
     mlflow.log_artifact(
-        str(CONFUSION_PATH)
+        "confusion_matrix.png"
     )
 
-    # Log model
+    # ======================
+    # REGISTER MODEL
+    # ======================
+
     mlflow.sklearn.log_model(
         sk_model=pipeline,
         artifact_path="model",
         registered_model_name="churn_model"
     )
 
-# =========================
-# SAVE MODEL
-# =========================
-
-joblib.dump(
-    pipeline,
-    MODEL_PATH
-)
-
-print(
-    "Model saved successfully"
-)
-
-print(
-    f"Accuracy: {accuracy}"
-)
+    print(
+        "Accuracy:",
+        accuracy
+    )
