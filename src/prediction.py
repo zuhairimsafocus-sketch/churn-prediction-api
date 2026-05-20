@@ -5,7 +5,7 @@ import joblib
 
 # Load model dari MLflow registry
 model = joblib.load(
-    "models/churn_model.pkl"
+    "models/churn_model_v2.pkl"
 )
 
 
