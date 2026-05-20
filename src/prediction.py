@@ -3,8 +3,8 @@ import mlflow
 
 
 # Load model dari MLflow registry
-model = mlflow.sklearn.load_model(
-    "models:/churn_model@staging"
+model = joblib.load(
+    "models/churn_model.pkl"
 )
 
 
