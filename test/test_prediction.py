@@ -1,20 +1,22 @@
-from src.prediction import prediction 
+from src.prediction import predict
 
 
 def test_prediction():
 
     sample = {
-        "Age": 35,
-        "Gender": "Male",
-        "Tenure": 12,
-        "Usage Frequency": 5,
-        "Support Calls": 2,
-        "Payment Delay": 0,
-        "Subscription Type": "Standard",
-        "Contract Length": "Annual",
-        "Total Spend": 500
+
+        "Payment Delay":25,
+        "Support Calls":8,
+        "Tenure":50,
+
+        "Gender":"Female",
+        "Subscription Type":"Basic",
+        "Contract Length":"Monthly"
+
     }
 
-    result = predict(sample)
+    result = predict(
+        sample
+    )
 
     assert result in [0,1]

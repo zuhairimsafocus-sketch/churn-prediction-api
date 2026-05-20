@@ -1,46 +1,45 @@
-import joblib
 import pandas as pd
-
 import mlflow
 
+
+# Load model dari MLflow registry
 model = mlflow.sklearn.load_model(
     "models:/churn_model@staging"
 )
 
-# =====================================
-# SAMPLE INPUT
-# =====================================
 
-sample_customer = pd.DataFrame({
+def predict(data):
 
-    'Payment Delay': [25],
-    'Support Calls': [8],
-    'Tenure': [50],
+    sample_customer = pd.DataFrame([data])
 
-    'Gender': ['Female'],
-    'Subscription Type': ['Basic'],
-    'Contract Length': ['Monthly']
-})
+    prediction = model.predict(
+        sample_customer
+    )
 
-# =====================================
-# PREDICT
-# =====================================
+    return int(
+        prediction[0]
+    )
 
-prediction = model.predict(
-    sample_customer
-)
 
-probability = model.predict_proba(
-    sample_customer
-)
+if __name__ == "__main__":
 
-# =====================================
-# OUTPUT
-# =====================================
+    sample = {
 
-print('Prediction:', prediction[0])
+        "Payment Delay":25,
+        "Support Calls":8,
+        "Tenure":50,
 
-print(
-    'Churn Probability:',
-    probability[0][1]
-)
+        "Gender":"Female",
+        "Subscription Type":"Basic",
+        "Contract Length":"Monthly"
+
+    }
+
+    result = predict(
+        sample
+    )
+
+    print(
+        "Prediction:",
+        result
+    )
