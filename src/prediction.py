@@ -1,5 +1,6 @@
 import pandas as pd
 import mlflow
+import joblib
 
 
 # Load model dari MLflow registry
