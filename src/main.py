@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException, Header
 import joblib
 import pandas as pd
 import time
+import os
 
 # ============================
 # LOAD MODEL
@@ -16,7 +17,7 @@ model = joblib.load(
 # ============================
 
 app = FastAPI()
-API_KEY = "zul12345"
+API_KEY = os.getenv("API_KEY")
 
 @app.get("/")
 def home():

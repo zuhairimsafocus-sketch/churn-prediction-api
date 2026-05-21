@@ -55,5 +55,6 @@ jobs:
 
           sudo docker run -d \
           --restart always \
+          -e API_KEY=${{ secrets.API_KEY }} \
           -p 8001:8001 \
           churn-api
