@@ -36,7 +36,10 @@ class CustomerInput(BaseModel):
 
 app = FastAPI()
 
-Instrumentator().instrument(app).expose(app)
+instrumentator = Instrumentator()
+
+instrumentator.instrument(app)
+instrumentator.expose(app, endpoint="/metrics")
 
 limiter = Limiter(key_func=get_remote_address)
 app.state.limiter = limiter
