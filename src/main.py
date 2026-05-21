@@ -5,6 +5,8 @@ import joblib
 import pandas as pd
 import time
 import os
+import logging
+import json
 
 # ============================
 # LOAD MODEL
@@ -24,6 +26,11 @@ limiter = Limiter(key_func=get_remote_address)
 app.state.limiter = limiter
 
 API_KEY = os.getenv("API_KEY")
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
 
 @app.get("/")
 def home():
@@ -74,7 +81,7 @@ def predict(
                 "v2"
         }
 
-        print(result)
+        logging.info(json.dumps(result))
 
         return result
 
