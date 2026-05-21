@@ -85,7 +85,19 @@ def predict(
     try:
         start = time.time()
 
-        df = pd.DataFrame([data.dict()])
+        input_data = data.model_dump()
+
+        input_data = {
+            "Payment Delay": input_data["PaymentDelay"],
+            "Support Calls": input_data["SupportCalls"],
+            "Tenure": input_data["Tenure"],
+            "Gender": input_data["Gender"],
+            "Subscription Type": input_data["SubscriptionType"],
+            "Contract Length": input_data["ContractLength"]
+}
+
+        df = pd.DataFrame([input_data])
+
 
         prediction = model.predict(df)[0]
         probability = model.predict_proba(df)[0][1]

@@ -16,13 +16,13 @@ def test_health():
 def test_prediction():
 
     sample = {
-        "Payment Delay":25,
-        "Support Calls":8,
-        "Tenure":50,
-        "Gender":"Female",
-        "Subscription Type":"Basic",
-        "Contract Length":"Monthly"
-    }
+    "PaymentDelay":25,
+    "SupportCalls":8,
+    "Tenure":50,
+    "Gender":"Female",
+    "SubscriptionType":"Basic",
+    "ContractLength":"Monthly"
+}
 
     response = client.post(
         "/predict",
