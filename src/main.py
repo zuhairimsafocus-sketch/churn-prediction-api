@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, headers
+from fastapi import FastAPI, HTTPException, header
 import joblib
 import pandas as pd
 import time
@@ -30,7 +30,7 @@ def home():
 # ============================
 
 @app.post("/predict")
-def predict(data:dict, api_key: str = headers(None)):
+def predict(data:dict, api_key: str = header(None)):
 
     if api_key != API_KEY:
         raise HTTPException(status_code=401, detail="Unauthorized")
