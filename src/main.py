@@ -1,4 +1,6 @@
-from fastapi import FastAPI, HTTPException, Header
+from fastapi import FastAPI, HTTPException, Header, Request
+from slowapi import Limiter
+from slowapi.util import get_remote_address
 import joblib
 import pandas as pd
 import time
@@ -17,6 +19,10 @@ model = joblib.load(
 # ============================
 
 app = FastAPI()
+
+limiter = Limiter(key_func=get_remote_address)
+app.state.limiter = limiter
+
 API_KEY = os.getenv("API_KEY")
 
 @app.get("/")
@@ -31,7 +37,12 @@ def home():
 # ============================
 
 @app.post("/predict")
-def predict(data:dict, api_key: str = Header(None)):
+@limiter.limit("5/minute")
+def predict(
+    request: Request,
+    data: dict,
+    api_key: str = Header(None)
+):
 
     if api_key != API_KEY:
         raise HTTPException(
