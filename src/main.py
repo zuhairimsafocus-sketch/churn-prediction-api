@@ -36,18 +36,12 @@ class CustomerInput(BaseModel):
 
 app = FastAPI()
 
-instrumentator = Instrumentator(
-    should_group_status_codes=False
-)
-
+instrumentator = Instrumentator()
 instrumentator.instrument(app)
+instrumentator.expose(app)
 
-@app.on_event("startup")
-async def startup():
-    instrumentator.expose(
-        app,
-        endpoint="/metrics"
-    )
+limiter = Limiter(key_func=get_remote_address)
+app.state.limiter = limiter
 
 API_KEY = os.getenv("API_KEY")
 
