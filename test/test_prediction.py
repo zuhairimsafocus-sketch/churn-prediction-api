@@ -1,18 +1,39 @@
-from src.prediction import predict
+from fastapi.testclient import TestClient
+from src.main import app
+
+client = TestClient(app)
+
+
+def test_health():
+
+    response = client.get("/health")
+
+    assert response.status_code == 200
+    assert response.json()["status"] == "healthy"
+
 
 def test_prediction():
 
     sample = {
-
-        "Payment Delay":25,
-        "Support Calls":8,
+        "PaymentDelay":25,
+        "SupportCalls":8,
         "Tenure":50,
         "Gender":"Female",
-        "Subscription Type":"Basic",
-        "Contract Length":"Monthly"
-
+        "SubscriptionType":"Basic",
+        "ContractLength":"Monthly"
     }
 
-    result = predict(sample)
+    response = client.post(
+        "/predict",
+        headers={
+            "api-key":"zul12345"
+        },
+        json=sample
+    )
 
-    assert result in [0,1]
+    assert response.status_code == 200
+
+    result = response.json()
+
+    assert "prediction" in result
+    assert "churn_probability" in result

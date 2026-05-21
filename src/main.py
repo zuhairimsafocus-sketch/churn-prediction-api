@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException, Header, Request
+from pydantic import BaseModel
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 import joblib
@@ -7,6 +8,7 @@ import time
 import os
 import logging
 import json
+from prometheus_fastapi_instrumentator import Instrumentator
 
 # ============================
 # LOAD MODEL
@@ -16,11 +18,21 @@ model = joblib.load(
     "../models/churn_model_v2.pkl"
 )
 
+class CustomerInput(BaseModel):
+    PaymentDelay:int
+    SupportCalls:int
+    Tenure:int
+    Gender:str
+    SubscriptionType:str
+    ContractLength:str
+
 # ============================
 # CREATE APP
 # ============================
 
 app = FastAPI()
+
+Instrumentator().instrument(app).expose(app)
 
 limiter = Limiter(key_func=get_remote_address)
 app.state.limiter = limiter
@@ -56,7 +68,7 @@ def health():
 @limiter.limit("5/minute")
 def predict(
     request: Request,
-    data: dict,
+    data: CustomerInput,
     api_key: str = Header(None)
 ):
 
@@ -69,7 +81,7 @@ def predict(
     try:
         start = time.time()
 
-        df = pd.DataFrame([data])
+        df = pd.DataFrame([data.dict()])
 
         prediction = model.predict(df)[0]
         probability = model.predict_proba(df)[0][1]
