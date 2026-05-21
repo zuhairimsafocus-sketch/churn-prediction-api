@@ -1,5 +1,6 @@
 from fastapi.testclient import TestClient
 from src.main import app
+import os
 
 client = TestClient(app)
 
@@ -25,9 +26,10 @@ def test_prediction():
 
     response = client.post(
         "/predict",
-        headers={
-            "api-key":"zul12345"
+       headers={
+    "api-key": os.getenv("API_KEY", "zul12345")
         },
+        
         json=sample
     )
 
