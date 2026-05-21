@@ -9,14 +9,18 @@ import os
 import logging
 import json
 from prometheus_fastapi_instrumentator import Instrumentator
+from pathlib import Path
+
 
 # ============================
 # LOAD MODEL
 # ============================
 
-model = joblib.load(
-    "../models/churn_model_v2.pkl"
-)
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+MODEL_PATH = BASE_DIR / "models" / "churn_model_v2.pkl"
+
+model = joblib.load(MODEL_PATH)
 
 class CustomerInput(BaseModel):
     PaymentDelay:int
