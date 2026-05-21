@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, header
+from fastapi import FastAPI, HTTPException, Header
 import joblib
 import pandas as pd
 import time
@@ -30,38 +30,36 @@ def home():
 # ============================
 
 @app.post("/predict")
-def predict(data:dict, api_key: str = header(None)):
+def predict(data:dict, api_key: str = Header(None)):
 
     if api_key != API_KEY:
-        raise HTTPException(status_code=401, detail="Unauthorized")
+        raise HTTPException(
+            status_code=401,
+            detail="Unauthorized"
+        )
 
     try:
-
         start = time.time()
 
         df = pd.DataFrame([data])
 
         prediction = model.predict(df)[0]
-
         probability = model.predict_proba(df)[0][1]
 
         latency = time.time() - start
 
         result = {
-            "prediction": (
-                "Churn"
-                if int(prediction)==1
-                else "No Churn"
-            ),
+            "prediction":
+                "Churn" if int(prediction)==1 else "No Churn",
 
             "churn_probability":
-            f"{probability:.2%}",
+                f"{probability:.2%}",
 
             "latency":
-            f"{latency:.4f} seconds",
+                f"{latency:.4f} seconds",
 
             "model_version":
-            "v2"
+                "v2"
         }
 
         print(result)
@@ -69,7 +67,6 @@ def predict(data:dict, api_key: str = header(None)):
         return result
 
     except Exception as e:
-
         return {
-            "error":str(e)
+            "error": str(e)
         }
