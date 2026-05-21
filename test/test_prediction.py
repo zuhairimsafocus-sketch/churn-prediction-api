@@ -16,12 +16,12 @@ def test_health():
 def test_prediction():
 
     sample = {
-        "PaymentDelay":25,
-        "SupportCalls":8,
+        "Payment Delay":25,
+        "Support Calls":8,
         "Tenure":50,
         "Gender":"Female",
-        "SubscriptionType":"Basic",
-        "ContractLength":"Monthly"
+        "Subscription Type":"Basic",
+        "Contract Length":"Monthly"
     }
 
     response = client.post(
@@ -29,7 +29,7 @@ def test_prediction():
        headers={
     "api-key": os.getenv("API_KEY", "zul12345")
         },
-        
+
         json=sample
     )
 
