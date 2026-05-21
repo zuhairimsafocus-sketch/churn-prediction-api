@@ -1,0 +1,6 @@
+matplotlib
+seaborn
+shap
+statsmodels
+mlflow
+pytest
