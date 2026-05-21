@@ -1,6 +1,6 @@
+mlflow
 matplotlib
 seaborn
 shap
-statsmodels
-mlflow
-pytest
+jupyter
+ipykernel
