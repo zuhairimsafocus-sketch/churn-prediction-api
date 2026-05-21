@@ -39,6 +39,15 @@ def home():
         "message":"Churn API Running"
     }
 
+
+@app.get("/health")
+def health():
+
+    return {
+        "status":"healthy",
+        "model_version":"v2"
+    }
+
 # ============================
 # PREDICTION ENDPOINT
 # ============================
