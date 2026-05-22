@@ -10,7 +10,8 @@ import logging
 import json
 from prometheus_fastapi_instrumentator import Instrumentator
 from pathlib import Path
-
+from prometheus_client import Histogram
+import time
 
 # ============================
 # LOAD MODEL
@@ -49,6 +50,24 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s"
 )
+
+REQUEST_LATENCY = Histogram(
+    "api_request_duration_seconds",
+    "API request latency"
+)
+
+@app.middleware("http")
+async def measure_latency(request, call_next):
+
+    start_time = time.time()
+
+    response = await call_next(request)
+
+    REQUEST_LATENCY.observe(
+        time.time() - start_time
+    )
+
+    return response
 
 @app.get("/")
 def home():
