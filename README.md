@@ -2,6 +2,7 @@
 
 End-to-end machine learning system for customer churn prediction with model deployment, monitoring, authentication, and interactive user interface.
 
+---
 
 ## Project Overview
 
