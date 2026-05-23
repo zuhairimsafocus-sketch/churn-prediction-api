@@ -12,7 +12,6 @@ from prometheus_fastapi_instrumentator import Instrumentator
 from pathlib import Path
 from prometheus_client import Histogram
 import time
-import shap
 
 # ============================
 # LOAD MODEL
@@ -24,7 +23,6 @@ MODEL_PATH = BASE_DIR / "models" / "churn_model_v2.pkl"
 
 model = joblib.load(MODEL_PATH)
 
-explainer = shap.Explainer(model)
 
 class CustomerInput(BaseModel):
     PaymentDelay:int
