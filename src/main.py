@@ -12,6 +12,7 @@ from prometheus_fastapi_instrumentator import Instrumentator
 from pathlib import Path
 from prometheus_client import Histogram
 import time
+import shap
 
 # ============================
 # LOAD MODEL
@@ -22,6 +23,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 MODEL_PATH = BASE_DIR / "models" / "churn_model_v2.pkl"
 
 model = joblib.load(MODEL_PATH)
+
+explainer = shap.Explainer(model)
 
 class CustomerInput(BaseModel):
     PaymentDelay:int
@@ -122,15 +125,46 @@ def predict(
 
         prediction = model.predict(df)[0]
         probability = model.predict_proba(df)[0][1]
+        
+        shap_values = explainer(df)
+        
+        importances = dict(
+            zip(df.columns, 
+                shap_values.values[0]
+                )
+            ),
+        
+        top_features = sorted(importances.items(),
+                              key=lambda x: abs(x[1]),
+                              reverse=True
+                              )[:3]
 
         latency = time.time() - start
-
+        
+        risk = "Low"
+        
+        if probability > 0.7:
+            risk = "High 🔴"
+            
+        elif probability >0.3:
+            risk = "Medium 🟡"
+            
+        else:
+            risk = "Low 🟢"
+            
         result = {
             "prediction":
                 "Churn" if int(prediction)==1 else "No Churn",
 
             "churn_probability":
                 f"{probability:.2%}",
+                
+            "risk_level":
+                risk,
+                
+            "top_factors":
+                [f"{k}: {round(v,3)}"
+                 for k,v in top_features],
 
             "latency":
                 f"{latency:.4f} seconds",
