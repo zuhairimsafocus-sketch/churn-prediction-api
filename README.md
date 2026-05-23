@@ -2,7 +2,6 @@
 
 End-to-end machine learning system for customer churn prediction with model deployment, monitoring, authentication, and interactive user interface.
 
----
 
 ## Project Overview
 
@@ -15,6 +14,51 @@ This project predicts whether a customer is likely to churn based on customer be
 - Model version tracking
 - Interactive prediction UI
 - Real-time monitoring dashboard
+
+## Live Demo
+
+### Customer Churn Prediction UI
+
+UI Demo:
+
+http://churn-customer.duckdns.org:7860
+
+Features:
+- Customer churn prediction
+- Probability score
+- Risk level indicator
+- API latency information
+- Real-time prediction
+
+---
+
+### API Documentation
+
+Swagger UI:
+
+http://churn-customer.duckdns.org:8001/docs
+
+Features:
+- Interactive API testing
+- Endpoint documentation
+- Request/response examples
+
+---
+
+### Monitoring Dashboard
+
+Grafana Dashboard:
+
+http://churn-customer.duckdns.org:3000
+
+Features:
+- Total API calls
+- Prediction requests
+- Success/Error rate
+- CPU usage
+- RAM usage
+- API latency
+- Request rate monitoring
 
 The project follows a production-style ML workflow including model serving, monitoring, containerization, and deployment.
 
