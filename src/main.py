@@ -126,18 +126,32 @@ def predict(
         prediction = model.predict(df)[0]
         probability = model.predict_proba(df)[0][1]
         
-        shap_values = explainer(df)
-        
-        importances = dict(
-            zip(df.columns, 
-                shap_values.values[0]
-                )
-            ),
-        
-        top_features = sorted(importances.items(),
-                              key=lambda x: abs(x[1]),
-                              reverse=True
-                              )[:3]
+        try:
+            importances = {}
+            
+            transformed_features = (
+                model.named_steps["preprocessor"]
+                .get_feature_names_out()
+            )
+            
+            coefficients = (
+                model.named_steps["model"]
+                .coef_[0]
+            )
+            
+            for feat, coef in zip(transformed_features, coefficients
+                                  ):
+                
+                importances[feat] = round(float(coef), 3)
+                
+            top_features = sorted(
+                importances.items(),
+                key=lambda x: abs(x[1]),
+                reverse=True
+            )[:3]
+            
+        except:
+            top_features = []
 
         latency = time.time() - start
         
@@ -163,8 +177,7 @@ def predict(
                 risk,
                 
             "top_factors":
-                [f"{k}: {round(v,3)}"
-                 for k,v in top_features],
+                top_features,
 
             "latency":
                 f"{latency:.4f} seconds",
