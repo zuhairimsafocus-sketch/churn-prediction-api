@@ -67,7 +67,7 @@ The project follows a production-style ML workflow including model serving, moni
 
 ## System Architecture
 
-User Interface (Gradio)
+User Interface (Gradio)<br>
         ↓
 FastAPI Prediction API
         ↓
