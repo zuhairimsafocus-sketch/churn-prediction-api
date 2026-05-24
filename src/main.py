@@ -10,7 +10,7 @@ import logging
 import json
 from prometheus_fastapi_instrumentator import Instrumentator
 from pathlib import Path
-from prometheus_client import Histogram
+from prometheus_client import Histogram, Counter, Gauge
 import time
 
 # ============================
@@ -55,6 +55,40 @@ logging.basicConfig(
 REQUEST_LATENCY = Histogram(
     "api_request_duration_seconds",
     "API request latency"
+)
+
+# ML Metrics
+
+PREDICTION_COUNTER = Counter(
+    "prediction_total",
+    "Total predictions",
+    ["prediction"]
+)
+
+RISK_COUNTER = Counter(
+    "risk_level_total",
+    "Risk distribution",
+    ["level"]
+)
+
+CHURN_PROBABILITY = Gauge(
+    "churn_probability_score",
+    "Average churn probability"
+)
+
+HIGH_RISK_COUNTER = Counter(
+    "high_risk_predictions_total",
+    "Total high risk predictions"
+)
+
+LOW_RISK_COUNTER = Counter(
+    "low_risk_predictions_total",
+    "Total low risk predictions"
+)
+
+MEDIUM_RISK_COUNTER = Counter(
+    "medium_risk_predictions_total",
+    "Total medium risk predictions"
 )
 
 @app.middleware("http")
@@ -163,6 +197,33 @@ def predict(
             
         else:
             risk = "Low 🟢"
+            
+        prediction_label = (
+            "Churn"
+            if int(prediction)==1
+            else "No Churn"
+        )
+
+        PREDICTION_COUNTER.labels(
+            prediction=prediction_label
+        ).inc()
+
+        RISK_COUNTER.labels(
+            level=risk
+        ).inc()
+
+        CHURN_PROBABILITY.set(
+            probability
+        )
+
+        if "High" in risk:
+            HIGH_RISK_COUNTER.inc()
+
+        elif "Medium" in risk:
+            MEDIUM_RISK_COUNTER.inc()
+
+        else:
+            LOW_RISK_COUNTER.inc()    
             
         result = {
             "prediction":
